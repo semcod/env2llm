@@ -7,7 +7,7 @@ and observations merge back after preflight, DSL ready, and execution.
 
 from __future__ import annotations
 
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -56,7 +56,7 @@ def _merge_execution_header(
     phase: str,
 ) -> None:
     history["last_phase"] = phase
-    history["last_observed_at"] = datetime.now(UTC).isoformat()
+    history["last_observed_at"] = datetime.now(timezone.utc).isoformat()
     history["last_status"] = str(execution.get("status", execution.get("state", "")))
 
 
@@ -216,7 +216,7 @@ def refresh_doql_registry(
         ir.data.update(dict(extra_data))
 
     ir.workflow_history.setdefault("last_phase", phase)
-    ir.workflow_history["last_observed_at"] = datetime.now(UTC).isoformat()
+    ir.workflow_history["last_observed_at"] = datetime.now(timezone.utc).isoformat()
     if intent:
         ir.workflow_history["last_intent"] = intent
 

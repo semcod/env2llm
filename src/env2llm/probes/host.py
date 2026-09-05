@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import platform
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -145,7 +145,7 @@ def _resolve_monitor_log(project_dir: Path) -> Path:
 def collect_host_probe(*, project_dir: Path | str | None = None) -> HostProbeIR:
     """Snapshot cron, local services, and example-test readiness on this host."""
     root = Path(project_dir).resolve() if project_dir is not None else Path.cwd()
-    now = datetime.now(UTC).isoformat()
+    now = datetime.now(timezone.utc).isoformat()
 
     cron_ok, cron_entries, taskinity_cron = cron_probe_state()
     endpoints = _probe_agent_http_endpoints()
