@@ -14,7 +14,7 @@ import json
 import os
 import shutil
 import stat
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -183,7 +183,7 @@ def current_run_id(root: Path | str) -> str:
     env = os.environ.get("NLP2DSL_RUN_ID", "").strip()
     if env:
         return env
-    stamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%S")
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S")
     os.environ["NLP2DSL_RUN_ID"] = stamp
     return stamp
 
@@ -214,7 +214,7 @@ def write_turn_snapshot(
         "turn": turn,
         "phase": phase,
         "status": response.get("status"),
-        "generated_at": datetime.now(UTC).isoformat(),
+        "generated_at": datetime.now(timezone.utc).isoformat(),
         "conversation_id": response.get("conversation_id"),
         "missing": response.get("missing"),
         "autofill_applied": response.get("autofill_applied"),

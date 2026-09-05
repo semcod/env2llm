@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from typing import Mapping
 
 DEFAULT_ENV_KEYS: tuple[str, ...] = (
@@ -74,7 +74,7 @@ def collect_environment(
     _collect_default_keys(out, keys)
     if include_all_prefixes:
         _collect_prefixed_keys(out, include_all_prefixes=include_all_prefixes)
-    out["generated_at"] = datetime.now(UTC).isoformat()
+    out["generated_at"] = datetime.now(timezone.utc).isoformat()
     return out
 
 
